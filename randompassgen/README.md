@@ -1,12 +1,45 @@
-# React + Vite
+Overview
+This React-based application generates random, secure passwords based on user preferences. It lets users:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Select password length (5 to 30 characters)
+Include or exclude:
+Uppercase letters (A-Z)
+Lowercase letters (a-z)
+Digits (0-9)
+Special characters (!@#$ etc.)
+Check password strength in real-time
+Copy the generated password to the clipboard
 
-Currently, two official plugins are available:
+Features & Why They Matter
+Feature	Purpose
+Adjustable password length	-> Enhances flexibility & security needs
+Character toggles	-> Gives user control over password composition
+Strength label	-> Provides visual feedback on password security
+Copy to clipboard	-> Quick and easy use of the generated password
+Range + / - buttons	-> Improve UX for adjusting password length
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Password Generation function
 
-## Expanding the ESLint configuration
+Combines only selected character sets into str
+Loops through based on length, picks random character using Math.random
+Appends to pass, then sets the result via setPassword(pass)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Password Strength Checker function
+
+Uses .test() from RegEx to check the presence of:
+    Uppercase letters
+    Numbers
+    Special characters
+Each matching rule adds a point to strengthPoints
+Determines strength: Weak → Medium → Strong → Very Strong
+
+Hooks Used & Why
+Hook	        Purpose
+useState	    Manages form inputs, options, password, and strength
+useCallback	    Caches the passwordGenerator() to prevent unnecessary re-renders
+useEffect	    Automatically generates password on changes to length or options
+useRef	        For copying password using select() and clipboard interaction
+
+Is Code Optimized?
+✅ Yes, code is modular and follows React best practices.
+✅ useCallback prevents useEffect from rerunning unnecessarily.
