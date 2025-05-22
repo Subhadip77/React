@@ -32,8 +32,8 @@ function App() {
 
   const passwordGenerator = useCallback(
     () => {
-      let pass = " "
-      let str = " "
+      let pass = ""
+      let str = ""
 
       if(allowCapsAlpha) str += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
       if(allowSmallAlpha) str += "abcdefghijklmnopqrstuvwxyz"
@@ -62,7 +62,11 @@ function App() {
 
   const passRef = useRef(null)
 
-  const passClipboardCopy = () => {
+  const copyPasswordToClipboard = () => {
+    if (!password) {
+    alert("No password to copy!");
+    return;
+  }
     passRef.current?.select();
     window.navigator.clipboard.writeText(password)
   }
@@ -93,8 +97,9 @@ function App() {
           />
           <span className={`strength-label ${passwordStrength.toLowerCase().replace(" ", "-")}`}>{passwordStrength}</span>
           <button 
+          disabled={!password}
           className="copy-btn"
-          onClick={passClipboardCopy}
+          onClick={copyPasswordToClipboard}
           >
           Copy
           </button>
@@ -115,7 +120,7 @@ function App() {
               max="30" 
               value={length}
               className="slider" 
-              onChange={(e) => setLength(e.target.value)}
+              onChange={(e) => setLength(parseInt(e.target.value))}
               />
               <button 
               className="length-btn"
